@@ -2,7 +2,6 @@
 
 from autograd.extend import primitive, defvjp, defjvp
 
-from autograd_lib import _grad_undefined
 from autograd_lib.sparse_utils import make_sparse, get_entries_indices, make_io_matrices
 
 
@@ -31,7 +30,7 @@ def vjp_sp_mult_x_reverse(b, entries, indices, x):
     return vjp
 
 
-defvjp(sp_mult, vjp_sp_mult_entries_reverse, _grad_undefined, vjp_sp_mult_x_reverse)
+defvjp(sp_mult, vjp_sp_mult_entries_reverse, None, vjp_sp_mult_x_reverse)
 
 
 def jvp_sp_mult_entries_forward(g, b, entries, indices, x):
@@ -44,7 +43,7 @@ def jvp_sp_mult_x_forward(g, b, entries, indices, x):
     return sp_mult(entries, indices, g)
 
 
-defjvp(sp_mult, jvp_sp_mult_entries_forward, _grad_undefined, jvp_sp_mult_x_forward)
+defjvp(sp_mult, jvp_sp_mult_entries_forward, None, jvp_sp_mult_x_forward)
 
 
 @primitive
@@ -93,10 +92,10 @@ def vjp_spsp_mult_entries_x(b_out, entries_a, indices_a, entries_x, indices_x, N
 defvjp(
     spsp_mult,
     vjp_spsp_mult_entries_a,
-    _grad_undefined,
+    None,
     vjp_spsp_mult_entries_x,
-    _grad_undefined,
-    _grad_undefined,
+    None,
+    None,
 )
 
 
@@ -111,8 +110,8 @@ def jvp_spsp_mult_entries_x(g, b_out, entries_a, indices_a, entries_x, indices_x
 defjvp(
     spsp_mult,
     jvp_spsp_mult_entries_a,
-    _grad_undefined,
+    None,
     jvp_spsp_mult_entries_x,
-    _grad_undefined,
-    _grad_undefined,
+    None,
+    None,
 )

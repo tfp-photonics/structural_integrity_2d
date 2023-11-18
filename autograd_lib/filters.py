@@ -4,8 +4,6 @@ import warnings
 import scipy.ndimage
 from autograd.extend import primitive, defvjp
 
-from . import _grad_undefined
-
 
 @primitive
 def gaussian_filter(x, width, mode="reflect"):
